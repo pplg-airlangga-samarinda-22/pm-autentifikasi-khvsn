@@ -3,11 +3,10 @@ require "../config/koneksi.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $username = $_POST['username'];
-    $password = md5($_POST['password']);
 
     // cek dulu apakah nik telah terdaftar
-    $sql = "SELECT * FROM petugas WHERE username=? AND password=?";
-    $cek = $koneksi->execute_query($sql, [$username, $password]);
+    $sql = "SELECT * FROM petugas WHERE username=?";
+    $cek = $koneksi->execute_query($sql, [$username]);
 
     if (mysqli_num_rows($cek) == 1) {
         echo "<script>alert('Pendaftaran berhasil!')</script>";
