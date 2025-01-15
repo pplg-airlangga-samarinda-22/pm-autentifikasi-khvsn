@@ -2,42 +2,44 @@
 require "../config/koneksi.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
-    $nama_petugas = $_POST['nama_petugas'];
+    $username = $_POST['username'];
+    $password = md5($_POST['password']);
 
-    // Check if NIK is already registered
-    $sql = "SELECT * FROM petugas WHERE nama_petugas=?";
-    $cek = $koneksi->execute_query($sql, [$nama_petugas]);
+    // cek dulu apakah nik telah terdaftar
+    $sql = "SELECT * FROM petugas WHERE username=? AND password=?";
+    $cek = $koneksi->execute_query($sql, [$username, $password]);
 
-    if (mysqli_num_rows($cek) === 1) {
-        echo "<script>alert('nama sudah digunakan!');</script>";
+    if (mysqli_num_rows($cek) == 1) {
+        echo "<script>alert('Pendaftaran berhasil!')</script>";
+        header("location:login.php");
     } else {
-        $nama = $_POST['nama'];
+        $nama_petugas = $_POST['nama_petugas'];
         $telepon = $_POST['telepon'];
         $username = $_POST['username'];
-        $password = md5($_POST['password']);
         $level = $_POST['level'];
-
-        $sql = "INSERT INTO masyarakat (nama, telp, username, password, level) VALUES (?, ?, ?, ?, ?)";
-        $koneksi->execute_query($sql, [$nama, $telepon, $username, $password, $level]);
-
-        echo "<script>alert('Pendaftaran berhasil!');</script>";
-        header("Location: login.php");
-        exit;
+        $password = md5($_POST['password']);
+        $sql = "INSERT INTO petugas SET nama_petugas=?,  telp=?, username=?, password=?, level=?";
+        $koneksi->execute_query($sql, [$nama_petugas, $telepon, $username, $password, $level]);
+        echo "<script>alert('USERNAME sudah digunakan!') </script>";
+        header("location:login.php");
     }
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <title>Registrasi</title>
 </head>
+
 <body>
     <h1>Registrasi Pengguna Baru</h1>
     <form action="" method="post">
         <div class="form-item">
-            <label for="nama">Nama Lengkap</label>
-            <input type="text" name="nama" id="nama" required>
+            <label for="nama_petugas">Nama Lengkap</label>
+            <input type="text" name="nama_petugas" id="nama_petugas" required>
         </div>
         <div class="form-item">
             <label for="telepon">Telepon</label>
@@ -51,9 +53,15 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
             <label for="password">Password</label>
             <input type="password" name="password" id="password" required>
         </div>
+        <select name="level" class="form-control" required>
+            <option value=""> Pilih Level Petugas </option>
+            <option value="admin"> Admin </option>
+            <option value="petugas"> Petugas </option>
+        </select>
+        <br>
         <button type="submit">Register</button>
     </form>
     <a href="login.php">Batal</a>
 </body>
-</html>
 
+</html>
