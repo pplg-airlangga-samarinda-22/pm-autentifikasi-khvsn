@@ -1,5 +1,5 @@
 <?php
-require "koneksi.php";
+require "../config/koneksi.php";
 
 if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $nik = $_POST['nik'];
@@ -59,3 +59,4 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     <a href="login.php">Batal</a>
 </body>
 </html>
+
