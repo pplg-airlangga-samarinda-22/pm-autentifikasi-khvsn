@@ -1,49 +1,41 @@
 <?php
 require "../config/koneksi.php";
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
     $password = md5($_POST['password']);
-
-    // fungsi execute_query hanya bisa digunakan pada PHP 8.2
-    $sql = "SELECT * FROM petugas WHERE username=? AND password=?";
-    $row = $koneksi->execute_query($sql, [$username, $password]);
-
-    if (mysqli_num_rows($row) == 1) {
+    $sql = "SELECT * FROM petugas WHERE username=? AND password=? ";
+    $row = $koneksi -> execute_query($sql, [$username, $password]) -> fetch_assoc();
+    if ($row) {
         session_start();
-        $_SESSION['username'] = $username;
+        $_SESSION['id'] = $row['id_petugas'];
+        $_SESSION['level'] = $row['level'];
         header("location:index.php");
     } else {
-        echo "<script>alert('Gagal Login!')</script>";
+        echo "<script>alert('Gagal Login')</script>";
     }
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
-
 <body>
-    <form action="" method="post" class="form-login">
-        <p>Silahkan Login Sebagai Admin</p>
+    <h1>Login</h1>
+    <form action="" class="form-login" method="post">
+        <p>Silahkan Login</p>
         <div class="form-item">
             <label for="username">Username</label>
-            <input type="text" name="username" id="username" required>
+            <input type="text" name="username" id="username">
         </div>
         <div class="form-item">
             <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password">
         </div>
-        <!-- <div class="form-item">
-            <label for="level">Level</label>
-            <div class=""></div>
-        </div> -->
         <button type="submit">Login</button>
-        <!-- <a href="register.php">Register</a> -->
     </form>
 </body>
-
 </html>

@@ -7,8 +7,6 @@ if ($_SERVER['REQUEST_METHOD'] == "GET") {
 
     $sql = "SELECT * FROM pengaduan WHERE id_pengaduan=?";
     $row = $koneksi -> execute_query($sql, [$id_pengaduan]) -> fetch_assoc();
-    var_dump($_GET); echo "<br>";
-    var_dump($row);
 } elseif ($_SERVER['REQUEST_METHOD'] == "POST"){
     $tanggal = date ('Y-m-d');
     $id_pengaduan = $_GET["id"];

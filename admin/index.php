@@ -1,9 +1,9 @@
 <?php
-    session_start();
-    require_once "../config/koneksi.php";
-    if (empty($_SESSION['username'])) {
-        header("location:login.php");
-    }
+session_start();
+require "../config/koneksi.php";
+if(empty($_SESSION['level'])) {
+    header("location:login.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -11,13 +11,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pelaporan Pengaduan</title>
+    <title>Admin Pengaduan</title>
 </head>
 <body>
-    <h1>Selamat Datang di Aplikasi Pengaduan Masyarakat</h1>
+    <h1>Selamat Datang di Sistem Pengaduan Masyarakat</h1>
     <nav>
         <a href="index.php">Dashboard</a>
-        <a href="register.php">Register</a>
+        <a href="pengaduan.php">Pengaduan</a>
+        <a href="masyarakat.php">Masyarakat</a>
+        <a href="petugas.php">Petugas</a>
+        <a href="laporan.php">Laporan</a>
         <a href="logout.php">Logout</a>
     </nav>
 </body>
