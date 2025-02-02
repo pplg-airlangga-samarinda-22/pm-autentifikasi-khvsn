@@ -2,7 +2,7 @@
 $hostname = "localhost";
 $username = "root";
 $password = "";
-$database = "pengaduan_masyarakat";
+$database = "db_irul";
 
 $koneksi = new mysqli($hostname, $username, $password, $database);
 ?>

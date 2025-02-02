@@ -1,4 +1,5 @@
 <?php
+session_start();
 require "../config/koneksi.php";
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = $_POST['username'];
@@ -36,6 +37,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <input type="password" name="password" id="password">
         </div>
         <button type="submit">Login</button>
+        <br>
+        <a href="../masyarakat/login.php"> Login Sebagai Administrator / Petugas </a>
     </form>
 </body>
 </html>
